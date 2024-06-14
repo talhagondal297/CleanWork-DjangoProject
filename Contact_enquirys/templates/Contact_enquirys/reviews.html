@@ -1,0 +1,58 @@
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cleaning Service Review</title>
+</head>
+<body style="font-family: Arial, sans-serif; background-color: #f5f5f5; margin: 0; padding: 0;">
+
+    <header style="background-color: skyblue; color: #fff; text-align: center; padding: 1em 0;">
+        <h1>Customer Review</h1>
+    </header>
+
+    <form action="{% url "reviews" %}" method="post" style="max-width: 600px; margin: 20px auto; padding: 20px; background-color: #fff; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+        {% csrf_token %}
+
+        <!-- Add hidden input field for the rating -->
+        <input type="hidden" id="rating" name="rating" value="0">
+
+        <label for="reviewText" style="display: block; margin-bottom: 8px; color: #333;">Your Review:</label>
+        <textarea id="reviewText" name="reviewText" rows="4" style="width: 100%; padding: 8px; margin-bottom: 16px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box;" required></textarea>
+
+        <div style="display: flex;">
+            <!-- Add your star elements here -->
+            <div style="font-size: 24px; cursor: pointer; margin-right: 5px;" id="star1" onclick="highlightStars(1)">★</div>
+            <div style="font-size: 24px; cursor: pointer; margin-right: 5px;" id="star2" onclick="highlightStars(2)">★</div>
+            <div style="font-size: 24px; cursor: pointer; margin-right: 5px;" id="star3" onclick="highlightStars(3)">★</div>
+            <div style="font-size: 24px; cursor: pointer; margin-right: 5px;" id="star4" onclick="highlightStars(4)">★</div>
+            <div style="font-size: 24px; cursor: pointer;" id="star5" onclick="highlightStars(5)">★</div>
+        </div>
+
+        <button type="submit" style="background-color: skyblue; color: #fff; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer;">Submit Review</button>
+    </form>
+
+    <script>
+        function highlightStars(rating) {
+            console.log('Clicked on star ' + rating);
+    
+            // Reset all stars to default color
+            for (let i = 1; i <= 5; i++) {
+                document.getElementById('star' + i).style.color = '#ddd';
+            }
+    
+            // Highlight selected stars
+            for (let i = 1; i <= rating; i++) {
+                document.getElementById('star' + i).style.color = 'gold';
+            }
+
+            // Set the selected rating in the hidden input field
+            document.getElementById('rating').value = rating;
+        }
+    </script>
+
+</body>
+</html>
+{% endblock %}
